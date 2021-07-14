@@ -32,16 +32,18 @@ for (let x = 0; x < WIDTH; x++) {
 	}
 }
 
+// Change color of start and end
 const END = grid[END_POS_X][END_POS_Y];
 const START = grid[WIDTH / 2 - 1][0];
 
-// Change color of start and end
 START.element.classList.add("start");
 END.element.classList.add("end");
 
+// Start the loop
 openList.push(START);
 
 const intervalId = setInterval(() => {
+	// There is no available path
 	if (openList.length == 0) {
 		clearInterval(intervalId);
 		for (let x = 0; x < WIDTH; x++) {
@@ -52,6 +54,7 @@ const intervalId = setInterval(() => {
 		return;
 	}
 
+	// Get the grid position with the lowest f score
 	let lowest;
 
 	for (const gridPosition of openList) {
@@ -62,14 +65,15 @@ const intervalId = setInterval(() => {
 	}
 
 	const currentGridPosition = lowest;
-	// const currentGridPosition = openList.sort((a, b) => b.fScore - a.fScore)[0];
 
+	// Ladies and gentlemen, we got 'm
 	if (currentGridPosition == END) {
 		clearInterval(intervalId);
 		createPath();
 		return;
 	}
 
+	// Create the current path
 	for (let x = 0; x < WIDTH; x++) {
 		for (let y = 0; y < HEIGHT; y++) {
 			grid[x][y].element.classList.remove("path");
@@ -77,9 +81,11 @@ const intervalId = setInterval(() => {
 	}
 	createPath(currentGridPosition);
 
+	// Remove the current grid position from the loop
 	openList.splice(openList.indexOf(currentGridPosition), 1);
 	closedList.push(currentGridPosition);
 
+	// Loop through all neighbors and add them to the loop (if not already) and change the scores
 	for (const neighbor of currentGridPosition.getNeighbors(grid)) {
 		if (!closedList.includes(neighbor)) {
 			const tempG = currentGridPosition.gScore + currentGridPosition.getHeuristics(neighbor);
@@ -87,9 +93,11 @@ const intervalId = setInterval(() => {
 			if (!openList.includes(neighbor)) {
 				openList.push(neighbor);
 			} else if (tempG >= neighbor.g) {
+				// This is not a better path
 				continue;
 			}
 
+			// Changing the variables
 			neighbor.gScore = tempG;
 			neighbor.hScore = neighbor.getHeuristics(END);
 			neighbor.fScore = neighbor.gScore + neighbor.hScore;
@@ -97,6 +105,7 @@ const intervalId = setInterval(() => {
 		}
 	}
 
+	// Give the grid some styles
 	for (const gridPosition of openList) {
 		gridPosition.element.classList.add("open");
 	}
@@ -107,6 +116,7 @@ const intervalId = setInterval(() => {
 	}
 }, INTERVAL);
 
+// Create the path
 function createPath(param = END) {
 	for (let x = 0; x < WIDTH; x++) {
 		for (let y = 0; y < HEIGHT; y++) {
