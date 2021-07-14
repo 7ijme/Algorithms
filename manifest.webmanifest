@@ -1,0 +1,32 @@
+{
+    "theme_color": "#3c455e",
+    "background_color": "#7e7d88",
+    "display": "browser",
+    "scope": "/",
+    "start_url": "https://algorithms-7ijme.vercel.app",
+    "name": "Pathfinding & Sorting Algorithms",
+    "short_name": "Algorithms",
+    "description": "Pathfinding & Sorting Algorithms",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
